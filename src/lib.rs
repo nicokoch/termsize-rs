@@ -32,3 +32,30 @@ mod target {
         }
     }
 }
+
+#[cfg(target_os = "windows")]
+mod target {
+    extern crate winapi;
+    extern crate kernel32;
+
+    use std::mem;
+    use self::winapi::{wincon, winbase};
+
+    // TODO: this method works for cmd and powershell,
+    // but returns (0, 0), if you use i.e. bash shell on windows.
+    // Possible fix: implement a fallback method which utilizes tput, resize or stty.
+    pub fn termsize() -> Option<(usize, usize)>{
+        let csbi = unsafe {
+            let mut csbi: wincon::CONSOLE_SCREEN_BUFFER_INFO = mem::zeroed();
+            let std_handle = kernel32::GetStdHandle(winbase::STD_OUTPUT_HANDLE);
+            if kernel32::GetConsoleScreenBufferInfo(std_handle, &mut csbi as wincon::PCONSOLE_SCREEN_BUFFER_INFO) == 0 {
+                return None
+            }
+            csbi
+        };
+
+        let columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+        let rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        Some((columns as usize, rows as usize))
+    }
+}

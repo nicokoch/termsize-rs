@@ -4,7 +4,7 @@ extern crate regex;
 use termsize::termsize;
 
 #[test]
-fn size_not_zero() {
+fn size_not_zero() { // TODO being zero is actually valid, why are we even doing this.
     let (width, height) = termsize().unwrap();
     assert!(width > 0);
     assert!(height > 0);

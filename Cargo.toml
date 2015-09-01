@@ -7,6 +7,10 @@ build = "build.rs"
 [dependencies]
 libc = "*"
 
+# Windows stuff
+winapi = "*"
+kernel32-sys = "*"
+
 [dev-dependencies]
 regex = "*"
 
