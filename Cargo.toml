@@ -1,0 +1,14 @@
+[package]
+name = "termsize"
+version = "0.1.0"
+authors = ["Nicolas Koch <nioko1337@gmail.com>"]
+build = "build.rs"
+
+[dependencies]
+libc = "*"
+
+[dev-dependencies]
+regex = "*"
+
+[build-dependencies]
+gcc = "*"
