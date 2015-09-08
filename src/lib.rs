@@ -1,3 +1,24 @@
+#![warn(missing_docs)]
+//! This crate provides a single function, `termsize()`,
+//! which returns the size of the terminal in columns and rows.
+//! # Usage
+//! ```rust
+//! extern crate termsize;
+//! use termsize::termsize;
+//!
+//! fn main() {
+//!     match termsize() {
+//!         Some((columns, rows)) => println!("Size of terminal is {} x {}", columns, rows),
+//!         None => println!("Not called from a terminal")
+//!     }
+//! }
+//! ```
+
+/// Returns the size of the terminal as a tuple `Option<(width, height)>`, where
+///
+/// Width: Number of columns.
+///
+/// Height: Number of rows.
 pub fn termsize() -> Option<(usize, usize)> {
     target::termsize()
 }
