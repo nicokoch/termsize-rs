@@ -14,7 +14,7 @@
 //! }
 //! ```
 
-/// Returns the size of the terminal as a tuple `Option<(width, height)>`, where
+/// Returns the size of the terminal as a tuple `Option<(width, height)>`.
 ///
 /// Width: Number of columns.
 ///
