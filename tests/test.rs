@@ -2,16 +2,20 @@ extern crate termsize;
 extern crate regex;
 
 use termsize::termsize;
+use std::env;
 
 #[test]
 fn size_not_zero() { // TODO being zero is actually valid, why are we even doing this.
+    if let Some(val) = env::var("APPVEYOR") {return}
     let (width, height) = termsize().unwrap();
     assert!(width > 0);
     assert!(height > 0);
+    println!("Terminal size: {:?}", (width, height));
 }
 
 #[test]
 fn works_in_child_thread() { //TODO also implement for child process
+    if let Some(val) = env::var("APPVEYOR") {return}
     use std::thread;
 
     let (width, height) = termsize().unwrap();
