@@ -6,7 +6,7 @@ use std::env;
 
 #[test]
 fn size_not_zero() { // TODO being zero is actually valid, why are we even doing this.
-    if let Some(val) = env::var("APPVEYOR") {return}
+    if let Ok(_) = env::var("APPVEYOR") {return}
     let (width, height) = termsize().unwrap();
     assert!(width > 0);
     assert!(height > 0);
@@ -15,9 +15,8 @@ fn size_not_zero() { // TODO being zero is actually valid, why are we even doing
 
 #[test]
 fn works_in_child_thread() { //TODO also implement for child process
-    if let Some(val) = env::var("APPVEYOR") {return}
     use std::thread;
-
+    if let Ok(_) = env::var("APPVEYOR") {return}
     let (width, height) = termsize().unwrap();
     let handle = thread::spawn(|| {
         termsize().unwrap()
