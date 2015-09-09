@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["termsize","Returns the size of the terminal as a tuple `Option<(width, height)>`, where"]]});
+initSidebarItems({"fn":[["termsize","Returns the size of the terminal as a tuple `Option<(width, height)>`."]]});
