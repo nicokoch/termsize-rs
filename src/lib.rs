@@ -26,6 +26,8 @@ pub fn termsize() -> Option<(usize, usize)> {
 #[cfg(target_os = "linux")]
 mod target {
     extern crate libc;
+
+    use std::mem;
     use self::libc::{c_int, c_ushort, STDOUT_FILENO};
     use self::libc::funcs::bsd44::ioctl;
 
@@ -34,7 +36,6 @@ mod target {
     }
 
     #[repr(C)]
-    #[derive(Default)]
     struct WinSize {
         ws_row: c_ushort,
         ws_col: c_ushort,
@@ -43,9 +44,9 @@ mod target {
     }
 
     pub fn termsize() -> Option<(usize, usize)> {
-        let ws = &mut WinSize::default();
         unsafe {
-            if ioctl(STDOUT_FILENO, tiocgwinsz, ws as *mut WinSize) == 0 {
+            let mut ws: WinSize = mem::zeroed();
+            if ioctl(STDOUT_FILENO, tiocgwinsz, &mut ws as *mut _) == 0 {
                 Some((ws.ws_col as usize, ws.ws_row as usize))
             } else {
                 None
